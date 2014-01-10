@@ -14,7 +14,7 @@ exports.sendText = function(req, res){
   console.log(req.body);
 //Send an text message
   var msg = {
-    to: '+13369262268',
+    to: req.body.to,
     from: '+13362454476',
     body: req.body.text
   };

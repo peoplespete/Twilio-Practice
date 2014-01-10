@@ -17,9 +17,12 @@ function initialize(){
 function clickSendText(){
 // function sendAjaxRequest(url, data, verb, altVerb, event, successFn){
 // function getValue(selector, fn){
+  var to = String(getValue('#to'));
+  $('#to').placeholder = "Type recipient phone number here"
   var text = getValue('#message');
-  console.log(text);
+  console.log(to);
   var message = {};
+  message.to = to;
   message.text = text;
   sendAjaxRequest('/', message, 'post', null, null, function(data){
     console.log('success');

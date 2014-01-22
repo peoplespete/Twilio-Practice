@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 require('require-dir')('./models');
 
 // route definitions
-var home = require('./routes/home');
+var twilioAPI = require('./routes/twilio');
 
 var app = express();
 var RedisStore = require('connect-redis')(express);
@@ -15,8 +15,9 @@ mongoose.connect('mongodb://localhost/name-of-database');
 require('./config').initialize(app, RedisStore);
 
 // routes
-app.get('/', home.index);
-app.post('/', home.sendText);
+app.get('/', twilioAPI.index);
+// app.get('/call', twilioAPI.call);
+app.post('/', twilioAPI.sendText);
 
 // start server & socket.io
 var common = require('./sockets/common');

@@ -7,26 +7,63 @@ var socket;
 function initialize(){
   $(document).foundation();
   initializeSocketIO();
-  $('#sendText').on('click', clickSendText);
 
+  $('#message').hide();
+  $('#send').hide();
+  $('#text').on('click', clickText);
+  $('#call').on('click', clickCall);
+  $('#send').on('click', clickSend);
 
+}
+var to = "";
+var isText = false;
 
+function clickText(){
+  to = String(getValue('#to'));
+  $('#message').show().focus();
+  isText = true;
+
+  $('#to').hide();
+  $('#call').hide();
+  $('#text').hide();
+  $('#send').show();
 
 }
 
-function clickSendText(){
-// function sendAjaxRequest(url, data, verb, altVerb, event, successFn){
-// function getValue(selector, fn){
-  var to = String(getValue('#to'));
-  $('#to').placeholder = "Type recipient phone number here"
+function clickCall(){
+  to = String(getValue('#to'));
+  window.open("http://twimlbin.com/82f17b4e");
+
+  $('#to').hide();
+  $('#call').hide();
+  $('#text').hide();
+  $('#send').show();
+
+}
+
+function clickSend(){
+
+  // console.log($(this).attr('id'));
+  // var isText = $(this).attr('id') == 'sendText';
+  // console.log(isText);
+  // $('#to').placeholder = "Type recipient phone number here"
+  // // console.log(to);
+  // if(isText){
+  //   $('#message').show();
+  // }else{
+  //   window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
+  //   window.open("http://twimlbin.com/82f17b4e");
+  // }
+
   var text = getValue('#message');
-  console.log(to);
   var message = {};
   message.to = to;
   message.text = text;
+  message.isText = isText;
   sendAjaxRequest('/', message, 'post', null, null, function(data){
-    console.log('success');
+    // console.log('success');
     console.log(data);
+
   });
 }
 
@@ -41,5 +78,5 @@ function initializeSocketIO(){
 }
 
 function socketConnected(data){
-  console.log(data);
+  // console.log(data);
 }
